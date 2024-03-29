@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score
 from imblearn.over_sampling import SMOTE
 dataset = pd.read_csv('Datasets/diabetes.csv')
 X = dataset.drop("Outcome", axis=1)  # Features
@@ -23,7 +23,11 @@ for i in range(1, 201): #Probando neuronas [1,200]
     nn.fit(X_train_scaled, y_train)
     nn_pred = nn.predict(X_test_scaled)
     nn_accuracy = accuracy_score(y_test, nn_pred)
+    recall = recall_score(y_test, nn_pred)
+    precision = precision_score(y_test, nn_pred)
     print("Accuracy of Neural Network:", nn_accuracy)
+    print("Recall of Neural Network:", recall)
+    print("Precision of Neural Network:", precision)
     accuracy[i] = nn_accuracy
 with open('accuracy.txt', 'w') as f:
     print(accuracy, file=f)
